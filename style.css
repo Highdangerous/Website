@@ -1,22 +1,24 @@
-/* Dark is the default */
+/* Dark is the default: warm charcoal with olive accents */
 :root {
-  --bg: #0c0a09;
-  --surface: #1c1917;
-  --text: #fafaf9;
-  --muted: #a8a29e;
-  --border: #292524;
-  --accent: #a78bfa;
-  --accent-soft: #2e1065;
+  --bg: #171511;
+  --surface: #221e18;
+  --text: #f5efe4;
+  --muted: #a89f90;
+  --border: #332e26;
+  --accent: #b7c28a;
+  --accent-soft: #2b2e1e;
+  --serif: "Cormorant Garamond", Georgia, serif;
 }
 
+/* Light: warm cream with deep olive */
 :root[data-theme="light"] {
-  --bg: #fafaf9;
-  --surface: #ffffff;
-  --text: #1c1917;
-  --muted: #57534e;
-  --border: #e7e5e4;
-  --accent: #6d28d9;
-  --accent-soft: #ede9fe;
+  --bg: #f6f2ea;
+  --surface: #fffdf8;
+  --text: #2a2620;
+  --muted: #6b6356;
+  --border: #e4dccd;
+  --accent: #5e6b3a;
+  --accent-soft: #e9ecd9;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -78,12 +80,35 @@ main { max-width: 960px; margin: 0 auto; padding: 0 clamp(1rem, 5vw, 2rem); }
 .eyebrow { color: var(--accent); font-weight: 700; font-size: 1.1rem; }
 
 h1 {
-  font-size: clamp(3rem, 12vw, 6.5rem);
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.04em;
+  font-family: var(--serif);
+  font-size: clamp(3.5rem, 13vw, 7.5rem);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
   margin: 0.5rem 0 1.5rem;
 }
+
+.section h2, .post-view h2 { font-family: var(--serif); font-weight: 500; font-size: clamp(2.2rem, 5vw, 3rem); }
+
+/* Hero: soft olive-tinted backdrop, like a landscape at dusk */
+.hero {
+  background:
+    radial-gradient(ellipse at 75% 40%, rgba(183, 194, 138, 0.18), transparent 60%),
+    linear-gradient(180deg, transparent, var(--bg));
+  margin: 0 calc(clamp(1rem, 5vw, 2rem) * -1);
+  padding: 0 clamp(1rem, 5vw, 2rem);
+}
+:root[data-theme="light"] .hero {
+  background:
+    radial-gradient(ellipse at 75% 40%, rgba(94, 107, 58, 0.14), transparent 60%),
+    linear-gradient(180deg, transparent, var(--bg));
+}
+
+.eyebrow { text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.85rem; }
+
+.card { border-radius: 1.25rem; }
+.card h3 { font-family: var(--serif); font-size: 1.6rem; font-weight: 500; }
+.card .num { color: var(--accent); font-family: var(--serif); font-size: 1.1rem; display: block; margin-bottom: 0.5rem; }
 
 .tagline { font-size: clamp(1.1rem, 2.5vw, 1.4rem); color: var(--muted); max-width: 36ch; }
 
@@ -99,8 +124,8 @@ h1 {
 }
 .btn:hover { transform: translateY(-2px); border-color: var(--accent); }
 .btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
-.btn.primary { color: #0c0a09; }
-:root[data-theme="light"] .btn.primary { color: #fff; }
+.btn.primary { color: #171511; }
+:root[data-theme="light"] .btn.primary { color: #fffdf8; }
 
 .section { padding: 5rem 0; border-top: 1px solid var(--border); }
 .section h2 { font-size: 2rem; letter-spacing: -0.02em; margin-bottom: 1.25rem; }
