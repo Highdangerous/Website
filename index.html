@@ -17,6 +17,7 @@
     <nav>
       <a href="#about">About</a>
       <a href="#projects">Projects</a>
+      <a href="#writing">Writing</a>
       <a href="#photos">Photos</a>
       <a href="#contact">Contact</a>
       <button id="theme-toggle" aria-label="Toggle dark mode">◐</button>
@@ -71,6 +72,35 @@
         </article>
       </div>
     </section>
+
+    <!-- WRITING -->
+    <section id="writing" class="section reveal">
+      <h2>Writing</h2>
+      <p>Notes on things I'm learning and building.</p>
+      <div class="grid" id="post-list"></div>
+    </section>
+
+    <!-- POST READER -->
+    <dialog id="post-dialog" class="post-dialog">
+      <article class="post-view">
+        <button class="close" id="post-close" aria-label="Close">×</button>
+        <p class="post-meta" id="post-meta"></p>
+        <h2 id="post-title"></h2>
+        <div class="post-body" id="post-body"></div>
+
+        <div class="post-actions">
+          <button class="like" id="post-like" aria-pressed="false">♡ <span id="like-count">0</span></button>
+        </div>
+
+        <h3>Comments</h3>
+        <form id="comment-form" class="comment-form">
+          <input id="comment-name" placeholder="Your name" maxlength="40" required>
+          <textarea id="comment-text" placeholder="Say something nice…" maxlength="500" required></textarea>
+          <button class="btn primary" type="submit">Post comment</button>
+        </form>
+        <ul class="comments" id="comment-list"></ul>
+      </article>
+    </dialog>
 
     <!-- PHOTOS
          Put your photos in the images/ folder, then add one <figure> per photo below.
