@@ -1,24 +1,25 @@
-/* Dark is the default: warm charcoal with olive accents */
+/* Palette pulled from the photos: fog blue-gray, bridge orange, foliage green */
 :root {
-  --bg: #171511;
-  --surface: #221e18;
-  --text: #f5efe4;
-  --muted: #a89f90;
-  --border: #332e26;
-  --accent: #b7c28a;
-  --accent-soft: #2b2e1e;
+  --bg: #0d1418;
+  --surface: #141d23;
+  --text: #edf1f0;
+  --muted: #93a2a8;
+  --border: #22303a;
+  --accent: #e8794f;
+  --accent-2: #8fb59a;
+  --accent-soft: rgba(232, 121, 79, 0.12);
   --serif: "Cormorant Garamond", Georgia, serif;
 }
 
-/* Light: warm cream with deep olive */
 :root[data-theme="light"] {
-  --bg: #f6f2ea;
-  --surface: #fffdf8;
-  --text: #2a2620;
-  --muted: #6b6356;
-  --border: #e4dccd;
-  --accent: #5e6b3a;
-  --accent-soft: #e9ecd9;
+  --bg: #eef2f3;
+  --surface: #ffffff;
+  --text: #17222a;
+  --muted: #5a6a72;
+  --border: #d8e0e3;
+  --accent: #c2461f;
+  --accent-2: #3f7a5c;
+  --accent-soft: rgba(194, 70, 31, 0.1);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,7 +31,24 @@ body {
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
-  transition: background 0.3s, color 0.3s;
+  transition: background 0.4s, color 0.4s;
+}
+
+/* Soft ambient glow: bridge orange top right, foliage green bottom left */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 40% at 90% 0%, color-mix(in srgb, var(--accent) 12%, transparent), transparent),
+    radial-gradient(55% 45% at 0% 100%, color-mix(in srgb, var(--accent-2) 12%, transparent), transparent);
+}
+
+/* Smooth colour change when switching themes */
+.nav, .card, .btn, .tags li, .gallery figure, .post-dialog, .comments li, .comment-form input, .comment-form textarea {
+  transition: background-color 0.4s, border-color 0.4s, color 0.4s, transform 0.2s;
 }
 
 a { color: inherit; text-decoration: none; }
@@ -90,18 +108,31 @@ h1 {
 
 .section h2, .post-view h2 { font-family: var(--serif); font-weight: 500; font-size: clamp(2.2rem, 5vw, 3rem); }
 
-/* Hero: soft olive-tinted backdrop, like a landscape at dusk */
-.hero {
+/* Hero: your fog photo, full width, fading smoothly into the page */
+.hero { position: relative; isolation: isolate; }
+.hero::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -4.5rem;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  margin-left: -50vw;
   background:
-    radial-gradient(ellipse at 75% 40%, rgba(183, 194, 138, 0.18), transparent 60%),
-    linear-gradient(180deg, transparent, var(--bg));
-  margin: 0 calc(clamp(1rem, 5vw, 2rem) * -1);
-  padding: 0 clamp(1rem, 5vw, 2rem);
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--bg) 55%, transparent) 0%,
+      color-mix(in srgb, var(--bg) 35%, transparent) 40%,
+      var(--bg) 100%),
+    url("images/fog-coast.jpg") center 30% / cover no-repeat;
 }
-:root[data-theme="light"] .hero {
+:root[data-theme="light"] .hero::before {
   background:
-    radial-gradient(ellipse at 75% 40%, rgba(94, 107, 58, 0.14), transparent 60%),
-    linear-gradient(180deg, transparent, var(--bg));
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--bg) 70%, transparent) 0%,
+      color-mix(in srgb, var(--bg) 55%, transparent) 40%,
+      var(--bg) 100%),
+    url("images/fog-coast.jpg") center 30% / cover no-repeat;
 }
 
 .eyebrow { text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.85rem; }
@@ -123,18 +154,21 @@ h1 {
   transition: transform 0.2s, border-color 0.2s;
 }
 .btn:hover { transform: translateY(-2px); border-color: var(--accent); }
-.btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
-.btn.primary { color: #171511; }
-:root[data-theme="light"] .btn.primary { color: #fffdf8; }
+.btn.primary { background: var(--accent); color: #0d1418; border-color: var(--accent); }
+:root[data-theme="light"] .btn.primary { color: #ffffff; }
 
-.section { padding: 5rem 0; border-top: 1px solid var(--border); }
-.section h2 { font-size: 2rem; letter-spacing: -0.02em; margin-bottom: 1.25rem; }
+/* Sections divided by a fading line instead of a hard border */
+.section {
+  padding: 5rem 0;
+  background: linear-gradient(90deg, transparent, var(--border), transparent) top / 100% 1px no-repeat;
+}
+.section h2 { letter-spacing: -0.02em; margin-bottom: 1.25rem; }
 .section > p { color: var(--muted); font-size: 1.1rem; max-width: 60ch; }
 
 .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; margin-top: 1.5rem; }
 .tags li {
-  background: var(--accent-soft);
-  color: var(--accent);
+  background: color-mix(in srgb, var(--accent-2) 16%, transparent);
+  color: var(--accent-2);
   padding: 0.35rem 0.9rem;
   border-radius: 999px;
   font-size: 0.9rem;
@@ -156,7 +190,8 @@ h1 {
 .link { color: var(--accent); font-weight: 600; }
 
 /* GALLERY */
-.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.75rem; margin-top: 1.5rem; }
+.section > p + .grid { margin-top: 1.5rem; }
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 0.75rem; margin-top: 1.5rem; }
 .gallery figure {
   margin: 0;
   border-radius: 0.75rem;
