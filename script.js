@@ -9,9 +9,8 @@ function getSavedTheme() {
   try { return localStorage.getItem("theme"); } catch { return null; }
 }
 
-const saved = getSavedTheme();
-const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-root.dataset.theme = saved || (prefersDark ? "dark" : "light");
+// Dark by default; only switch to light if the visitor chose it
+root.dataset.theme = getSavedTheme() || "dark";
 
 toggle.addEventListener("click", () => {
   root.dataset.theme = root.dataset.theme === "dark" ? "light" : "dark";
