@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your Name — Personal Website</title>
+  <meta name="description" content="Personal website of Your Name.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+  <header class="nav">
+    <a href="#top" class="logo">YN<span>.</span></a>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+      <button id="theme-toggle" aria-label="Toggle dark mode">◐</button>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <p class="eyebrow">Hey, I'm</p>
+      <h1>Your Name</h1>
+      <p class="tagline">Student · Builder · Writer. I make things on the internet and write about what I learn.</p>
+      <div class="hero-buttons">
+        <a href="#projects" class="btn primary">See my work</a>
+        <a href="#contact" class="btn">Say hi</a>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section reveal">
+      <h2>About me</h2>
+      <p>
+        Write a few sentences about yourself here — where you're from, what you're
+        studying or working on, and what gets you excited. Keep it human.
+      </p>
+      <ul class="tags">
+        <li>Thing I like</li>
+        <li>Skill</li>
+        <li>Another skill</li>
+        <li>Hobby</li>
+      </ul>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="section reveal">
+      <h2>Projects</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>Project One</h3>
+          <p>A short description of what this is and why you made it.</p>
+          <a href="#" class="link">View →</a>
+        </article>
+        <article class="card">
+          <h3>Project Two</h3>
+          <p>A short description of what this is and why you made it.</p>
+          <a href="#" class="link">View →</a>
+        </article>
+        <article class="card">
+          <h3>Project Three</h3>
+          <p>A short description of what this is and why you made it.</p>
+          <a href="#" class="link">View →</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section reveal">
+      <h2>Get in touch</h2>
+      <p>Want to collab, chat, or just say hi? My inbox is open.</p>
+      <div class="socials">
+        <a href="mailto:you@example.com" class="btn primary">Email me</a>
+        <a href="https://github.com/" class="btn" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://instagram.com/" class="btn" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://linkedin.com/" class="btn" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© <span id="year"></span> Your Name. Built from scratch.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
