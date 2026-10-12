@@ -272,3 +272,24 @@ footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.9r
 @media (max-width: 480px) {
   .nav nav a { font-size: 0.9rem; }
 }
+
+/* PHOTO BACKGROUND SECTIONS: full-width photo with a fade so text stays readable */
+.photo-bg { position: relative; isolation: isolate; }
+.photo-bg::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  left: 50%;
+  width: 100vw;
+  margin-left: -50vw;
+  background:
+    linear-gradient(180deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 72%, transparent) 30%, color-mix(in srgb, var(--bg) 72%, transparent) 70%, var(--bg) 100%),
+    var(--photo) center / cover no-repeat;
+}
+.photo-bg > p { color: color-mix(in srgb, var(--text) 80%, transparent); }
+
+/* Post thumbnails and in-post images (for posts that have a photo) */
+.post-card .thumb { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 0.75rem; margin-bottom: 1rem; display: block; }
+.post-image { width: 100%; border-radius: 0.9rem; margin: 0.5rem 0 1.25rem; display: block; }
+.post-body p { white-space: pre-line; }
