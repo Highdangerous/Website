@@ -29,26 +29,14 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
 
-// Posts: edit this list to add or change posts
-const POSTS = [
+// Posts live in posts.json. Publish new ones from write.html.
+// This fallback is only used if posts.json can't be loaded (e.g. opening the file directly).
+let POSTS = [
   {
     id: "first-post",
-    date: "Oct 2026",
+    date: "Oct 12, 2026",
     title: "Hello, world",
-    excerpt: "Why I built my own site instead of using a template.",
-    body: [
-      "I wanted a place that's mine. No platform rules, no algorithm, just a page I control.",
-      "This is the first of many posts. I'll write about what I'm learning and building.",
-    ],
-  },
-  {
-    id: "second-post",
-    date: "Oct 2026",
-    title: "Things I'm learning",
-    excerpt: "A short list of what's on my mind this month.",
-    body: [
-      "Replace this with your own thoughts. Short paragraphs work best online.",
-    ],
+    body: "I wanted a place that's mine. No platform rules, no algorithm, just a page I control.\n\nThis is the first of many posts.",
   },
 ];
 
@@ -71,15 +59,36 @@ const commentList = document.getElementById("comment-list");
 const commentForm = document.getElementById("comment-form");
 let activePost = null;
 
+function escapeHtml(str) {
+  const div = document.createElement("div");
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function toParagraphs(body) {
+  const text = Array.isArray(body) ? body.join("\n\n") : String(body || "");
+  return text.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
+}
+
+function excerpt(post) {
+  const first = toParagraphs(post.body)[0] || "";
+  return first.length > 110 ? first.slice(0, 110).trimEnd() + "…" : first;
+}
+
 function renderPostCards() {
+  if (!POSTS.length) {
+    postList.innerHTML = `<p class="empty">No posts yet.</p>`;
+    return;
+  }
   postList.innerHTML = POSTS.map((post) => {
     const likes = store.get(`likes:${post.id}`, 0);
     const comments = store.get(`comments:${post.id}`, []).length;
     return `
-      <article class="card post-card" tabindex="0" data-id="${post.id}">
-        <p class="post-meta">${post.date}</p>
-        <h3>${post.title}</h3>
-        <p>${post.excerpt}</p>
+      <article class="card post-card" tabindex="0" data-id="${escapeHtml(post.id)}">
+        ${post.image ? `<img class="thumb" src="${escapeHtml(post.image)}" alt="" loading="lazy">` : ""}
+        <p class="post-meta">${escapeHtml(post.date)}</p>
+        <h3>${escapeHtml(post.title)}</h3>
+        <p>${escapeHtml(excerpt(post))}</p>
         <p class="stats">♡ ${likes} · 💬 ${comments}</p>
       </article>`;
   }).join("");
@@ -89,7 +98,9 @@ function openPost(post) {
   activePost = post;
   document.getElementById("post-meta").textContent = post.date;
   document.getElementById("post-title").textContent = post.title;
-  document.getElementById("post-body").innerHTML = post.body.map((p) => `<p>${p}</p>`).join("");
+  document.getElementById("post-body").innerHTML =
+    (post.image ? `<img class="post-image" src="${escapeHtml(post.image)}" alt="">` : "") +
+    toParagraphs(post.body).map((p) => `<p>${escapeHtml(p)}</p>`).join("");
   renderLike();
   renderComments();
   commentForm.reset();
@@ -113,12 +124,6 @@ function renderComments() {
           <p>${escapeHtml(c.text)}</p>
         </li>`).join("")
     : `<li class="none">No comments yet. Be the first!</li>`;
-}
-
-function escapeHtml(str) {
-  const div = document.createElement("div");
-  div.textContent = str;
-  return div.innerHTML;
 }
 
 likeBtn.addEventListener("click", () => {
@@ -160,3 +165,8 @@ document.getElementById("post-close").addEventListener("click", () => dialog.clo
 dialog.addEventListener("click", (e) => { if (e.target === dialog) dialog.close(); });
 
 renderPostCards();
+
+fetch("posts.json", { cache: "no-store" })
+  .then((r) => (r.ok ? r.json() : Promise.reject()))
+  .then((data) => { if (Array.isArray(data)) { POSTS = data; renderPostCards(); } })
+  .catch(() => {});
