@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Weather</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h1>Weather</h1>
+    <form id="search">
+      <input id="city" type="text" placeholder="Search a city…" autocomplete="off" required>
+      <button type="submit">Search</button>
+      <button type="button" id="units" title="Switch units">°C</button>
+    </form>
+
+    <p id="status" role="status" aria-live="polite"></p>
+
+    <section id="current" hidden>
+      <h2 id="place"></h2>
+      <p class="temp"><span id="temp"></span></p>
+      <p id="desc"></p>
+      <p class="meta">Feels like <span id="feels"></span> · Wind <span id="wind"></span> · Humidity <span id="humidity"></span></p>
+    </section>
+
+    <section id="forecast" hidden>
+      <h3>7-day forecast</h3>
+      <ul id="days"></ul>
+    </section>
+
+    <p class="credit">Data by <a href="https://open-meteo.com/">Open-Meteo</a></p>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
