@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tidy</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h1>Tidy</h1>
+    <p class="lead">Sort files, rename them in bulk, or summarise a CSV. Everything happens in your browser and no file is uploaded anywhere.</p>
+
+    <nav class="tabs" role="tablist">
+      <button role="tab" data-tab="organize" aria-selected="true">Organize</button>
+      <button role="tab" data-tab="rename" aria-selected="false">Rename</button>
+      <button role="tab" data-tab="csv" aria-selected="false">CSV summary</button>
+    </nav>
+
+    <!-- ORGANIZE -->
+    <section id="tab-organize" class="panel">
+      <label class="drop" for="organize-files">
+        <strong>Drop files here</strong> or click to choose
+        <input id="organize-files" type="file" multiple hidden>
+      </label>
+      <div id="organize-result"></div>
+      <button id="organize-download" class="primary" hidden>Download sorted .zip</button>
+    </section>
+
+    <!-- RENAME -->
+    <section id="tab-rename" class="panel" hidden>
+      <label class="drop" for="rename-files">
+        <strong>Drop files here</strong> or click to choose
+        <input id="rename-files" type="file" multiple hidden>
+      </label>
+      <div class="row">
+        <label>Prefix <input id="rename-prefix" type="text" value="file"></label>
+        <label>Start at <input id="rename-start" type="number" value="1" min="0"></label>
+      </div>
+      <div id="rename-result"></div>
+      <button id="rename-download" class="primary" hidden>Download renamed .zip</button>
+    </section>
+
+    <!-- CSV -->
+    <section id="tab-csv" class="panel" hidden>
+      <label class="drop" for="csv-file">
+        <strong>Drop a CSV file here</strong> or click to choose
+        <input id="csv-file" type="file" accept=".csv,text/csv" hidden>
+      </label>
+      <div id="csv-result"></div>
+    </section>
+
+    <p id="status" role="status" aria-live="polite"></p>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
