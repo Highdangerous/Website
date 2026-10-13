@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PID Playground</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/theme.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="../shared/theme.js" defer></script>
+</head>
+<body>
+  <header class="nav">
+    <a href="../" class="logo">YN<span>.</span></a>
+    <nav>
+      <a href="../#projects">Projects</a>
+      <button id="theme-toggle" aria-label="Toggle dark mode">◐</button>
+    </nav>
+  </header>
+
+  <main>
+    <p class="eyebrow">Project · Controls</p>
+    <h1>PID Playground</h1>
+    <p class="lead">Tune a controller and watch the system respond. Drag the sliders and the simulation re-runs instantly.</p>
+
+    <div class="tabs" id="plants" role="tablist" aria-label="System to control"></div>
+    <p class="blurb" id="blurb"></p>
+
+    <section class="card chart-card">
+      <canvas id="chart" role="img" aria-label="Response chart"></canvas>
+      <canvas id="effort" role="img" aria-label="Controller output chart"></canvas>
+      <div class="legend">
+        <span><i class="sw out"></i> Output</span>
+        <span><i class="sw sp"></i> Target</span>
+        <span><i class="sw ef"></i> Controller output (0 to 100% of its limits)</span>
+      </div>
+    </section>
+
+    <section class="metrics" id="metrics" aria-live="polite"></section>
+
+    <section class="card controls">
+      <div class="slider">
+        <label for="kp">Kp <small>proportional</small></label>
+        <input id="kp" type="range" min="0" max="10" step="0.05">
+        <output id="kp-out"></output>
+      </div>
+      <div class="slider">
+        <label for="ki">Ki <small>integral</small></label>
+        <input id="ki" type="range" min="0" max="10" step="0.05">
+        <output id="ki-out"></output>
+      </div>
+      <div class="slider">
+        <label for="kd">Kd <small>derivative</small></label>
+        <input id="kd" type="range" min="0" max="3" step="0.05">
+        <output id="kd-out"></output>
+      </div>
+      <div class="slider">
+        <label for="sp">Target <small id="sp-unit"></small></label>
+        <input id="sp" type="range" min="1" step="1">
+        <output id="sp-out"></output>
+      </div>
+
+      <div class="toggles">
+        <label><input type="checkbox" id="disturb"> Disturbance at 6 s</label>
+        <label><input type="checkbox" id="noise"> Sensor noise</label>
+        <label><input type="checkbox" id="windup" checked> Anti-windup</label>
+      </div>
+
+      <div class="presets" id="presets"></div>
+    </section>
+
+    <details class="card explain">
+      <summary>What do P, I and D do?</summary>
+      <ul>
+        <li><strong>P (proportional)</strong> pushes in proportion to the error. Higher is faster, but too high overshoots or oscillates, and P alone usually leaves a steady error.</li>
+        <li><strong>I (integral)</strong> adds up past error, so it removes that leftover error and recovers from disturbances. Too much makes it overshoot and swing.</li>
+        <li><strong>D (derivative)</strong> reacts to how fast the output is changing, so it damps overshoot. It also amplifies sensor noise, so turn on noise and raise Kd to see it.</li>
+        <li><strong>Anti-windup</strong> stops the integral from piling up while the controller is maxed out. Turn it off and ask for a big jump to see the extra overshoot.</li>
+      </ul>
+      <p class="small">Error is measured as a fraction of each system's range, so the same gains behave similarly across the three systems. Derivative uses the measurement, not the error, to avoid a spike when the target jumps.</p>
+    </details>
+  </main>
+
+  <script src="sim.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
